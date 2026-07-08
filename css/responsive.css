@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Responsive — tablet and mobile adaptations
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .wrap { padding: 0 24px; }
+  .hero__grid { grid-template-columns: 1fr; }
+  .ledger-visual { height: 320px; order: -1; }
+  .split-grid { grid-template-columns: 1fr; }
+  .entry-list-grid { grid-template-columns: 1fr; }
+  .form-card { position: static; }
+  .analytics-grid { grid-template-columns: 1fr; }
+  .analytics-grid > .chart-card:last-child { grid-column: auto; }
+}
+
+@media (max-width: 860px) {
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .insights-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero__stats { flex-wrap: wrap; gap: 20px 32px; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 18px; }
+  .navbar__brand span.navbar__name { display: none; }
+  .hero { padding: 48px 0 40px; }
+  .hero__headline { font-size: 2.1rem; }
+  .summary-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card { padding: 16px; }
+  .stat-card__value { font-size: var(--fs-lg); }
+  .insights-grid { grid-template-columns: 1fr 1fr; }
+  .cat-picker { grid-template-columns: repeat(4, 1fr); }
+  .expense-row {
+    grid-template-columns: 34px 1fr auto;
+    grid-template-areas:
+      "icon main amount"
+      "actions actions actions";
+    row-gap: 8px;
+  }
+  .expense-row__icon { grid-area: icon; width: 34px; height: 34px; }
+  .expense-row__main { grid-area: main; }
+  .expense-row__date { display: none; }
+  .expense-row__amount { grid-area: amount; }
+  .expense-row__actions {
+    grid-area: actions;
+    opacity: 1;
+    transform: none;
+    justify-content: flex-end;
+  }
+  .ring-wrap { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .toolbar .select-wrap { width: 100%; }
+  .footer__inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 420px) {
+  .summary-grid { grid-template-columns: 1fr; }
+  .insights-grid { grid-template-columns: 1fr; }
+  .cat-picker { grid-template-columns: repeat(3, 1fr); }
+}

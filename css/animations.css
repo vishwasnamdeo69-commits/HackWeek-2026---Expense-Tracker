@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Animations — keyframes + motion utilities
+   All authored to be skipped by the reduced-motion rule in base.css
+   ========================================================================== */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(-18px) translateX(8px); }
+}
+@keyframes floatYAlt {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(16px) translateX(-10px); }
+}
+@keyframes drift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes tapeScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 rgba(109,107,255,0.35); }
+  70%  { box-shadow: 0 0 0 10px rgba(109,107,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(109,107,255,0); }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position: 200% 0; }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes spinSlow {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Entrance choreography -------------------------------------------- */
+.reveal {
+  animation: fadeSlideUp var(--dur-slow) var(--ease-out) both;
+}
+.reveal-stagger > * {
+  animation: fadeSlideUp var(--dur-slow) var(--ease-out) both;
+}
+.reveal-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.reveal-stagger > *:nth-child(2) { animation-delay: 60ms; }
+.reveal-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.reveal-stagger > *:nth-child(4) { animation-delay: 180ms; }
+.reveal-stagger > *:nth-child(5) { animation-delay: 240ms; }
+.reveal-stagger > *:nth-child(6) { animation-delay: 300ms; }
+
+/* ---- Ambient hero background ------------------------------------------ */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.blob--1 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle at 30% 30%, var(--indigo), transparent 70%);
+  top: -80px; left: 8%;
+  animation: floatY 14s ease-in-out infinite;
+}
+.blob--2 {
+  width: 360px; height: 360px;
+  background: radial-gradient(circle at 60% 40%, var(--cyan), transparent 70%);
+  top: 60px; right: 4%;
+  animation: floatYAlt 17s ease-in-out infinite;
+}
+.blob--3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle at 50% 50%, var(--violet), transparent 70%);
+  bottom: -100px; left: 38%;
+  animation: floatY 20s ease-in-out infinite reverse;
+}
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-hair) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-hair) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 75%);
+}
+
+/* ---- Ledger tape (signature visual in hero) ---------------------------- */
+.ledger-tape {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(180deg, var(--surface-1), var(--bg-base));
+  box-shadow: var(--shadow-lg);
+}
+.ledger-tape__scroll {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  animation: tapeScroll 26s linear infinite;
+}
+.ledger-tape:hover .ledger-tape__scroll { animation-play-state: paused; }
+.ledger-tape__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px;
+  border-bottom: 1px dashed var(--border-hair);
+  font-family: var(--font-ledger);
+  font-size: 12.5px;
+}
+.ledger-tape::before, .ledger-tape::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 64px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ledger-tape::before { top: 0; background: linear-gradient(var(--surface-1), transparent); }
+.ledger-tape::after { bottom: 0; background: linear-gradient(transparent, var(--bg-base)); }
+
+/* ---- Counting number utility (JS toggles this while animating) --------- */
+.is-counting { transition: none; }
+
+/* ---- Row enter / exit for expense list --------------------------------- */
+.expense-row.row-enter {
+  animation: fadeSlideUp var(--dur-base) var(--ease-out) both;
+}
+.expense-row.row-exit {
+  animation: fadeSlideUp var(--dur-base) var(--ease-in-out) reverse both;
+  pointer-events: none;
+}
+
+/* ---- Progress ring fill uses stroke-dashoffset transition in components.css */
+
+/* ---- Skeleton shimmer (used only if a slow storage read ever blocks paint) */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r-sm);
+}
+
+/* ---- Button press ripple ------------------------------------------------ */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: rippleAnim 600ms var(--ease-out);
+  pointer-events: none;
+}
+@keyframes rippleAnim {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ---- Success confetti burst (budget under-limit celebration) ----------- */
+.confetti-piece {
+  position: fixed;
+  top: -10px;
+  width: 8px; height: 12px;
+  opacity: 0.9;
+  z-index: 400;
+  animation: confettiFall var(--fall-dur, 2.6s) ease-in forwards;
+}
+@keyframes confettiFall {
+  to { transform: translateY(105vh) rotate(540deg); opacity: 0.3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob, .ledger-tape__scroll, .hero-mesh { animation: none !important; }
+}
