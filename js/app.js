@@ -24,6 +24,26 @@ import { CATEGORY_FILTER_ALL, CATEGORIES } from './constants.js';
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
+function applyRuntimeBranding() {
+  const config = window.APP_CONFIG || {};
+  const appName = String(config.APP_NAME || 'LedgerFlow');
+  const version = String(config.APP_VERSION || '1.0.0');
+  const theme = String(config.APP_THEME || 'dark').toLowerCase();
+
+  document.title = `${appName} — Take Control of Every Rupee`;
+  document.body.dataset.theme = theme;
+
+  const brand = $('#app-brand');
+  if (brand && brand.firstChild && brand.firstChild.nodeType === Node.TEXT_NODE) {
+    brand.firstChild.textContent = appName;
+  }
+
+  const footerMeta = $('#app-footer-meta');
+  if (footerMeta) {
+    footerMeta.innerHTML = `${appName} v${version} — built for HackWeek <span id="year-now">2026</span>. All data stays in your browser.`;
+  }
+}
+
 // ---------------------------------------------------------------------
 // Form state (add / edit)
 // ---------------------------------------------------------------------
@@ -390,6 +410,7 @@ function initLedgerTape() {
 // Bootstrap
 // ---------------------------------------------------------------------
 function init() {
+  applyRuntimeBranding();
   initNavbar();
   initForm();
   initBudgetPanel();

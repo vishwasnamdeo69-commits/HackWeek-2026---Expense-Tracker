@@ -1,0 +1,6 @@
+window.APP_CONFIG = {
+  APP_NAME: "LedgerFlow",
+  APP_VERSION: "1.0.0",
+  APP_THEME: "dark",
+  APP_PORT: "8080"
+};

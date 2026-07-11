@@ -1,0 +1,19 @@
+# Docker build exclusions
+.git
+.gitignore
+README.md
+README.*
+screenshots/
+videos/
+*.log
+*.tmp
+*.temp
+*.swp
+*.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+.env
+npm-debug.log*
+yarn-error.log*
